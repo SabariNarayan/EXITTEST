@@ -1,0 +1,110 @@
+<!-- dashboard.component.html -->
+<app-navbar></app-navbar>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App Dashboard</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffffff, #b2d8e6);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard {
+            width: 80%;
+            height: 80%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .todo-list-description {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding-top: 20px; /* Adjusted padding */
+        }
+
+        /* Added table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .completed-task {
+            text-decoration: line-through;
+        }
+
+        /* Rest of the styles remain the same */
+        .add-button, .delete-button, .filter {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .filter-select {
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .delete-button {
+            margin-left: 0px;
+            height: 45px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="todo-list-description">Todo List</div>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Task Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of filteredTasks">
+                    <td>
+                        <input type="checkbox" [disabled]="task.status === 'completed'" (change)="updateTaskStatus(task)" [checked]="task.status === 'completed'" />
+                    </td>
+                    <td [class.completed-task]="task.status === 'completed'">{{ task.task }}</td>
+                    <td>
+                        <button class="delete-button" (click)="deleteTask(task._id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="add-button" routerLink="/add">Add</button>
+        <select class="filter-select" [(ngModel)]="filterValue" (change)="applyFilter()">
+            <option value="all">All Tasks</option>
+            <option value="completed">Completed Tasks</option>
+            <option value="incomplete">Incomplete Tasks</option>
+        </select>
+    </div>
+</body>
+</html>
